@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Carregar fitxers</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h2>Carregar fitxers de la comunitat</h2>
+
+<form action="/procesar" method="post" enctype="multipart/form-data">
+    <label for="comunitatFile">Fitxer comunitat.txt:</label>
+    <input type="file" id="comunitatFile" name="comunitatFile" required><br><br>
+
+    <label for="gastosFile">Fitxer despeses.txt:</label>
+    <input type="file" id="gastosFile" name="gastosFile" required><br><br>
+
+    <button type="submit">Processar</button>
+</form>
+
+<div th:if="${error}">
+    <p style="color: red;">[[${error}]]</p>
+</div>
+
+</body>
+</html>

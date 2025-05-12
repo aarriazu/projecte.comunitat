@@ -23,6 +23,9 @@ public class ComunitatController {
                            @RequestParam("gastosFile") MultipartFile gastosFile,
                            Model model) {
         try {
+            if (comunitatFile.isEmpty()) {
+                throw new IllegalArgumentException("El fitxer comunitat.txt està buit.");
+            }
             comunitatService.processarFitxers(comunitatFile, gastosFile);
             return "redirect:/resumen";
         } catch (Exception e) {

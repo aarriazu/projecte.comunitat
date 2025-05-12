@@ -1,6 +1,7 @@
 package com.comunitat.projecte.comunitat.model;
 
-public class Local extends Propietat {
+public class Local {
+    /*
     private String nomComercial;
     private String activitat;
 
@@ -15,4 +16,6 @@ public class Local extends Propietat {
 
     public String getNomComercial() { return nomComercial; }
     public String getActivitat() { return activitat; }
+    */
+
 }

@@ -24,21 +24,22 @@ public class ComunitatController {
                            Model model) {
         try {
             comunitatService.processarFitxers(comunitatFile, gastosFile);
-            return "redirect:/resum";
+            return "redirect:/resumen";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "formulari";
         }
     }
 
-    @GetMapping("/resum")
-    public String resum(Model model) {
+    @GetMapping("/resumen")
+    public String resumen(Model model) {
         Comunitat c = comunitatService.getComunitat();
         model.addAttribute("comunitat", c);
         model.addAttribute("zones", c.getZones());
         model.addAttribute("propietats", c.getPropietats());
         model.addAttribute("propietaris", c.getPropietaris());
         model.addAttribute("despeses", c.getDespeses());
-        return "resum";
+        System.out.println("Datos enviados al modelo: " + model);
+        return "resumen";
     }
 }

@@ -1,6 +1,7 @@
 package com.comunitat.projecte.comunitat.model;
 
-public class Garatge extends Propietat {
+public class Garatge {
+    /*
     private String obertaTancada;
     private String teTraster;
 
@@ -15,4 +16,5 @@ public class Garatge extends Propietat {
 
     public String getObertaTancada() { return obertaTancada; }
     public String getTeTraster() { return teTraster; }
+    */
 }

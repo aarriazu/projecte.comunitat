@@ -1,6 +1,7 @@
 package com.comunitat.projecte.comunitat.model;
 
-public class Pis extends Propietat {
+public class Pis {
+    /*
     private String hhHnh;
     private int numDormitoris;
 
@@ -15,4 +16,5 @@ public class Pis extends Propietat {
 
     public String getHhHnh() { return hhHnh; }
     public int getNumDormitoris() { return numDormitoris; }
+     */
 }

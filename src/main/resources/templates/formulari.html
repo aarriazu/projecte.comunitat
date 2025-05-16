@@ -1,25 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Carregar fitxers</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!-- Favicon -->
+    <link rel="icon" th:href="@{/img/toaddlogo.ico}" type="image/x-icon">
+
+    <title>Comunidad | Formulario</title>
 </head>
 <body>
-<h2>Carregar fitxers de la comunitat</h2>
 
-<form action="/procesar" method="post" enctype="multipart/form-data">
-    <label for="comunitatFile">Fitxer comunitat.txt:</label>
-    <input type="file" id="comunitatFile" name="comunitatFile" required><br><br>
+<div class="form-wrapper">
+    <div class="form-card">
+        <h1 class="form-title">Càrrega fitxers comunitat</h1>
 
-    <label for="gastosFile">Fitxer despeses.txt:</label>
-    <input type="file" id="gastosFile" name="gastosFile" required><br><br>
+        <form action="/procesar" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="comunitatFile">Fitxer comunitat.txt:</label>
+                <input type="file" id="comunitatFile" name="comunitatFile" required>
+            </div>
 
-    <button type="submit">Processar</button>
-</form>
+            <div class="form-group">
+                <label for="gastosFile">Fitxer despeses.txt:</label>
+                <input type="file" id="gastosFile" name="gastosFile" required>
+            </div>
 
-<div th:if="${error}">
-    <p style="color: red;">[[${error}]]</p>
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-upload"></i> Processar
+            </button>
+        </form>
+
+        <div th:if="${error}" class="error-message">
+            <p><i class="fas fa-exclamation-triangle"></i> [[${error}]]</p>
+        </div>
+    </div>
 </div>
 
 </body>

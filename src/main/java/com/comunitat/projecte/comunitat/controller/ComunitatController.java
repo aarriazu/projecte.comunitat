@@ -37,11 +37,18 @@ public class ComunitatController {
     @GetMapping("/resumen")
     public String resumen(Model model) {
         Comunitat c = comunitatService.getComunitat();
+
+        if (c == null) {
+            model.addAttribute("error", "Has d'importar els fitxers abans de veure el resum.");
+            return "formulari"; // Asegúrate de que existe
+        }
+
         model.addAttribute("comunitat", c);
         model.addAttribute("zones", c.getZones());
         model.addAttribute("propietats", c.getPropietats());
         model.addAttribute("propietaris", c.getPropietaris());
         model.addAttribute("despeses", c.getDespeses());
+
         System.out.println("Datos enviados al modelo: " + model);
         return "resumen";
     }

@@ -1,6 +1,150 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Resumen</title>
-   
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Comunitat | Resumen</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- CSS personalizado -->
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f2f5, #d6e4f0);
+            color: #333;
+            padding: 40px 20px;
+        }
+
+        .form-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .form-card {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #0d6efd;
+            position: relative;
+        }
+
+        .form-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #0d6efd;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .columns {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .column {
+            flex: 1;
+            min-width: 260px;
+            background: #f9faff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .column h2 {
+            color: #0d6efd;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 6px;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 30px auto 0;
+            background-color: #0d6efd;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #0b5ed7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+    <div class="form-card">
+        <h1 class="form-title">Resum dels fitxers</h1>
+
+        <div class="columns">
+            <div class="column">
+                <h2>Zonas</h2>
+                <ul>
+                    <li th:each="zona : ${zones}" th:text="${zona.nom}">Nom de la zona</li>
+                </ul>
+            </div>
+
+            <div class="column">
+              <!--
+                <h2>Propietats</h2>
+                <ul>
+                    <li th:each="prop : ${propietats}"
+                        th:text="'Codi: ' + ${prop.codi} + ', Metres: ' + ${prop.metresQuadrats}">
+                        Propietat
+                    </li>
+                </ul>
+-->
+                <h2>Propietaris</h2>
+                <ul>
+                    <li th:each="p : ${propietaris}" th:text="${p.nom}">Propietari</li>
+                </ul>
+            </div>
+
+            <div class="column">
+                <h2>Despeses</h2>
+                <ul>
+                    <li th:each="d : ${despeses}"
+                        th:text="${d.descripcio} + ': ' + ${d.importTotal} + '€'">Despesa</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Tornar a la càrrega</a>
+    </div>
+</div>
+
+</body>
+</html>

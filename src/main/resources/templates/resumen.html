@@ -9,8 +9,6 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-    <!-- CSS personalizado -->
-
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -20,7 +18,7 @@
         }
 
         .form-wrapper {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -34,7 +32,7 @@
         .form-title {
             text-align: center;
             font-size: 2rem;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             color: #0d6efd;
             position: relative;
         }
@@ -42,10 +40,10 @@
         .form-title::after {
             content: '';
             display: block;
-            width: 60px;
+            width: 80px;
             height: 4px;
             background: #0d6efd;
-            margin: 10px auto 0;
+            margin: 12px auto 0;
             border-radius: 2px;
         }
 
@@ -57,8 +55,7 @@
         }
 
         .column {
-            flex: 1;
-            min-width: 260px;
+            flex: 1 1 18%;
             background: #f9faff;
             padding: 20px;
             border-radius: 12px;
@@ -76,8 +73,8 @@
         }
 
         ul {
-            list-style-type: disc;
-            padding-left: 20px;
+            list-style-type: none;
+            padding-left: 0;
         }
 
         ul li {
@@ -107,9 +104,23 @@
 
 <div class="form-wrapper">
     <div class="form-card">
-        <h1 class="form-title">Resum dels fitxers</h1>
+        <h1 class="form-title">Resumen de la Comunidad</h1>
 
+        <!-- Agrupamos las columnas correctamente -->
         <div class="columns">
+            <!-- Columna 1: Resumen -->
+            <div class="column">
+                <h2>Resumen</h2>
+                <ul>
+                    <li th:text="'Comunidad: ' + ${comunitat.id} + ' - ' + ${comunitat.nom}">Comunidad: ID - Nombre</li>
+                    <li th:text="'Número de zonas: ' + ${zones.size()}">Número de zonas</li>
+                    <li th:text="'Número de propiedades: ' + ${propietats.size()}">Número de propiedades</li>
+                    <li th:text="'Número de propietarios: ' + ${propietaris.size()}">Número de propietarios</li>
+                    <li th:text="'Número de gastos: ' + ${despeses.size()}">Número de gastos</li>
+                </ul>
+            </div>
+
+            <!-- Columna 2: Zonas -->
             <div class="column">
                 <h2>Zonas</h2>
                 <ul>
@@ -117,24 +128,28 @@
                 </ul>
             </div>
 
+            <!-- Columna 3: Propietats -->
             <div class="column">
-              <!--
-                <h2>Propietats</h2>
+                <h2><a href="/propietats">Propietats</a></h2>
                 <ul>
                     <li th:each="prop : ${propietats}"
                         th:text="'Codi: ' + ${prop.codi} + ', Metres: ' + ${prop.metresQuadrats}">
                         Propietat
                     </li>
                 </ul>
--->
-                <h2>Propietaris</h2>
+            </div>
+
+            <!-- Columna 4: Propietaris -->
+            <div class="column">
+                <h2><a href="/propietaris">Propietaris</a></h2>
                 <ul>
                     <li th:each="p : ${propietaris}" th:text="${p.nom}">Propietari</li>
                 </ul>
             </div>
 
+            <!-- Columna 5: Despeses -->
             <div class="column">
-                <h2>Despeses</h2>
+                <h2><a href="/despeses">Despeses</a></h2>
                 <ul>
                     <li th:each="d : ${despeses}"
                         th:text="${d.descripcio} + ': ' + ${d.importTotal} + '€'">Despesa</li>

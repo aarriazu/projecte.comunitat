@@ -1,4 +1,3 @@
-// utils/FitxerParser.java
 package com.comunitat.projecte.comunitat.util;
 
 import com.comunitat.projecte.comunitat.model.*;
@@ -56,39 +55,26 @@ public class FitxerParser {
 
                     case "#Propietat":
                         String[] parts = line.split(";");
-                        if (parts.length < 5) throw new IllegalArgumentException("Línea mal formada en #Propietat");
+                        if (parts.length < 7) throw new IllegalArgumentException("Línea mal formada en #Propietat");
                         String tipus = parts[0];
                         String codi = parts[1];
                         int m2 = Integer.parseInt(parts[2]);
                         String codiPropietari = parts[3];
                         String zonesStr = parts[4];
-                        /* 
-                        Propietari prop = mapaPropietaris.get(codiPropietari);
-                        if (prop == null) throw new IllegalArgumentException("Propietari no encontrado: " + codiPropietari);
-                        */
-                        Propietat propietat = new Propietat(codi, m2, codiPropietari, parts[5], parts[6]);
+                        String caracteristica1 = parts[5];
+                        String caracteristica2 = parts[6];
 
-                        /* 
-                        switch (tipus) {
-                            case "P":
-                                if (parts.length != 7) throw new IllegalArgumentException("Línea mal formada para Pis");
-                                propietat = new Pis(codi, m2, codiPropietari, parts[5], Integer.parseInt(parts[6]));
-                                break;
-                            case "L":
-                                if (parts.length != 7) throw new IllegalArgumentException("Línea mal formada para Local");
-                                propietat = new Local(codi, m2, codiPropietari, parts[5], parts[6]);
-                                break;
-                            case "G":
-                                if (parts.length != 7) throw new IllegalArgumentException("Línea mal formada para Garatge");
-                                propietat = new Garatge(codi, m2, codiPropietari, parts[5], parts[6]);
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Tipus de propietat desconegut: " + tipus);
-                        }
-                        */
+                        // Crear la propiedad con el constructor completo
+                        Propietat propietat = new Propietat(
+                                tipus,
+                                codi,
+                                m2,
+                                codiPropietari,
+                                caracteristica1,
+                                caracteristica2
+                        );
 
-                        comunitat.getPropietats().add(propietat);
-
+                        // Procesar las zonas y porcentajes
                         String[] zps = zonesStr.split(",");
                         for (String zp : zps) {
                             if (zp.contains("-")) {
@@ -102,6 +88,7 @@ public class FitxerParser {
                                 zonaAssignada.getPercentatges().add(pz);
                             }
                         }
+                        comunitat.getPropietats().add(propietat);
                         break;
 
                     default:
@@ -109,11 +96,10 @@ public class FitxerParser {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error llegint comunitat.txt: " + e.getMessage(), e);
+            throw new RuntimeException("Error leyendo comunitat.txt: " + e.getMessage(), e);
         }
 
         System.out.println("comunitat.txt procesado correctamente");
-
         return comunitat;
     }
 
@@ -121,15 +107,25 @@ public class FitxerParser {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.isEmpty() || line.startsWith("#") || line.startsWith(".")) continue; // Ignorar líneas vacías y comentarios
-                System.out.println("Procesando línea: " + line); // Depuración
-                if (line.trim().isEmpty() || line.startsWith("#")) continue;
+                line = line.trim();
+                if (line.isEmpty() || line.startsWith("#") || line.startsWith(".")) continue;
+
+                System.out.println("Procesando línea de despeses: " + line);
                 String[] parts = line.split(";");
-                Despesa d = new Despesa(parts[0], parts[1], Double.parseDouble(parts[2]), parts[3]);
+                if (parts.length != 4) {
+                    throw new IllegalArgumentException("Formato incorrecto en línea de despeses: " + line);
+                }
+
+                Despesa d = new Despesa(
+                        parts[0],  // código
+                        parts[1],  // descripción
+                        Double.parseDouble(parts[2]),  // importe
+                        parts[3]   // zona
+                );
                 comunitat.getDespeses().add(d);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error llegint despeses.txt", e);
+            throw new RuntimeException("Error leyendo despeses.txt", e);
         }
         System.out.println("despeses.txt procesado correctamente");
     }

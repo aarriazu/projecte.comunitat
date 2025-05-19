@@ -130,7 +130,7 @@
 
             <!-- Columna 3: Propietats -->
             <div class="column">
-                <h2><a href="/propietats">Propietats</a></h2>
+                <h2><a href="/propiedades">Propietats</a></h2>
                 <ul>
                     <li th:each="prop : ${propietats}"
                         th:text="'Codi: ' + ${prop.codi} + ', Metres: ' + ${prop.metresQuadrats}">
@@ -141,7 +141,7 @@
 
             <!-- Columna 4: Propietaris -->
             <div class="column">
-                <h2><a href="/propietaris">Propietaris</a></h2>
+                <h2><a href="/propietarios">Propietaris</a></h2>
                 <ul>
                     <li th:each="p : ${propietaris}" th:text="${p.nom}">Propietari</li>
                 </ul>
@@ -149,7 +149,7 @@
 
             <!-- Columna 5: Despeses -->
             <div class="column">
-                <h2><a href="/despeses">Despeses</a></h2>
+                <h2><a href="/cuotas">Despeses</a></h2>
                 <ul>
                     <li th:each="d : ${despeses}"
                         th:text="${d.descripcio} + ': ' + ${d.importTotal} + '€'">Despesa</li>

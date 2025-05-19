@@ -52,4 +52,46 @@ public class ComunitatController {
         System.out.println("Datos enviados al modelo: " + model);
         return "resumen";
     }
+
+    @GetMapping("/propiedades")
+    public String veurePropietats(Model model) {
+        Comunitat c = comunitatService.getComunitat();
+        if (c == null) {
+            model.addAttribute("error", "Fitxers no carregats.");
+            return "formulari";
+        }
+        model.addAttribute("propietats", c.getPropietats());
+        return "propiedades";
+    }
+
+    @GetMapping("/propietarios")
+    public String veurePropietaris(Model model) {
+        Comunitat c = comunitatService.getComunitat();
+
+        if (c == null) {
+            model.addAttribute("error", "Fitxers no carregats.");
+            return "formulari";
+        }
+
+        if (c.getPropietaris() == null || c.getPropietaris().isEmpty()) {
+            model.addAttribute("error", "No hi ha propietaris disponibles.");
+            return "formulari";
+        }
+
+        model.addAttribute("propietaris", c.getPropietaris());
+        return "propietarios";
+    }
+
+    @GetMapping("/cuotas")
+    public String veureDespeses(Model model) {
+        Comunitat c = comunitatService.getComunitat();
+        if (c == null) {
+            model.addAttribute("error", "Fitxers no carregats.");
+            return "formulari";
+        }
+        model.addAttribute("despeses", c.getDespeses());
+        return "cuotas";
+    }
+
+
 }

@@ -3,108 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <title>Propiedades</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f4fa;
-            padding: 40px 20px;
-            color: #333;
-        }
-
-        h1 {
-            text-align: center;
-            color: #0d6efd;
-            margin-bottom: 30px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        th, td {
-            padding: 12px 16px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        th {
-            background-color: #e7f0ff;
-            color: #0d6efd;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .back-btn {
-            display: block;
-            margin: 30px auto 0;
-            background-color: #0d6efd;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 10px;
-            font-weight: bold;
-            text-decoration: none;
-            text-align: center;
-            width: fit-content;
-        }
-
-        .back-btn:hover {
-            background-color: #0b5ed7;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        ul li {
-            margin-bottom: 4px;
-        }
-    </style>
 </head>
 <body>
-
 <h1>Propiedades</h1>
-
-<table>
-    <thead>
-    <tr>
-        <th>Código</th>
-        <th>m²</th>
-        <th>Propietario</th>
-        <th>Zonas y %</th>
-        <th>Tipo</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="prop : ${propietats}">
-        <td th:text="${prop.codi}">P001</td>
-        <td th:text="${prop.metresQuadrats}">90</td>
-        <td th:text="${prop.propietari.nom}">Juan Pérez</td>
-        <td>
-            <ul>
-                <li th:each="entry : ${prop.percentatgesZona}"
-                    th:text="${entry.key.nom} + ': ' + ${#numbers.formatDecimal(entry.value, 1, 'POINT', 2, 'NONE')} + '%'">
-                    Zona A: 45.00%
-                </li>
-            </ul>
-        </td>
-        <td th:text="${prop.tipus}">HH</td>
-    </tr>
-    </tbody>
-</table>
-
-<a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Tornar a l'inici</a>
-
+<ul>
+    <li th:each="prop : ${propietats}" th:text="${prop.codi}">Código</li>
+</ul>
+<a href="/resumen">Volver al inicio</a>
 </body>
 </html>

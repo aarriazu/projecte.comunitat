@@ -76,6 +76,9 @@
 
 <h1>Propietarios</h1>
 
+<!-- Mostrar mensaje de error si existe -->
+<div th:if="${error}" style="color: red; text-align: center; margin-bottom: 20px;" th:text="${error}"></div>
+
 <table>
     <thead>
     <tr>
@@ -86,7 +89,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="p : ${propietaris}">
+    <tr th:each="p : ${propietaris}" th:if="${propietaris != null}">
         <td th:text="${p.id}">P001</td>
         <td th:text="${p.nom}">Juan Pérez</td>
         <td th:text="${p.email}">juan@example.com</td>
@@ -99,7 +102,7 @@
     </tbody>
 </table>
 
-<a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Tornar a l'inici</a>
+<a href="/resumen" class="back-btn"><i class="fas fa-arrow-left"></i> Tornar a l'inici</a>
 
 </body>
 </html>

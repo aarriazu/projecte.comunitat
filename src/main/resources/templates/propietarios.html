@@ -2,69 +2,91 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Propietarios</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Propietarios | Resumen</title>
+
+    <!-- Font Awesome (para iconos si necesitas) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f4fa;
-            padding: 40px 20px;
+            background: linear-gradient(135deg, #f0f2f5, #d6e4f0);
             color: #333;
+            padding: 40px 20px;
         }
 
-        h1 {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .title {
             text-align: center;
+            font-size: 2rem;
             color: #0d6efd;
             margin-bottom: 30px;
+            position: relative;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+        .title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #0d6efd;
+            margin: 14px auto 0;
+            border-radius: 2px;
         }
 
-        th, td {
-            padding: 12px 16px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-            vertical-align: top;
+        .card-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
         }
 
-        th {
-            background-color: #e7f0ff;
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
             color: #0d6efd;
+            margin-bottom: 10px;
         }
 
-        tr:last-child td {
-            border-bottom: none;
+        .card p {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
         }
 
-        ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        ul li {
-            margin-bottom: 4px;
+        .prop-list {
+            margin-top: 10px;
+            padding-left: 16px;
+            list-style: disc;
+            font-size: 0.9rem;
         }
 
         .back-btn {
             display: block;
-            margin: 30px auto 0;
+            margin: 40px auto 0;
             background-color: #0d6efd;
             color: white;
             padding: 12px 30px;
             border-radius: 10px;
             font-weight: bold;
-            text-decoration: none;
             text-align: center;
+            text-decoration: none;
             width: fit-content;
+            transition: background-color 0.3s ease;
         }
 
         .back-btn:hover {
@@ -74,35 +96,26 @@
 </head>
 <body>
 
-<h1>Propietarios</h1>
+<div class="container">
+    <h1 class="title">Llistat de Propietaris</h1>
 
-<!-- Mostrar mensaje de error si existe -->
-<div th:if="${error}" style="color: red; text-align: center; margin-bottom: 20px;" th:text="${error}"></div>
+    <div class="card-list">
+        <div class="card" th:each="p : ${propietaris}">
+            <h2 th:text="${p.nom}">Nom del propietari</h2>
+            <p><strong>Codi:</strong> <span th:text="${p.codi}">123</span></p>
+            <p><strong>Població:</strong> <span th:text="${p.poblacio}">Barcelona</span></p>
+            <p><strong>Email:</strong> <span th:text="${p.email}">email@exemple.com</span></p>
 
-<table>
-    <thead>
-    <tr>
-        <th>Código</th>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Propiedades asociadas</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="p : ${propietaris}" th:if="${propietaris != null}">
-        <td th:text="${p.id}">P001</td>
-        <td th:text="${p.nom}">Juan Pérez</td>
-        <td th:text="${p.email}">juan@example.com</td>
-        <td>
-            <ul>
-                <li th:each="prop : ${p.propietats}" th:text="${prop.codi}">PROP-001</li>
+            <ul class="prop-list">
+                <li th:each="prop : ${p.propietats}" th:text="'Propietat: ' + ${prop.codi}">Propietat X</li>
             </ul>
-        </td>
-    </tr>
-    </tbody>
-</table>
+        </div>
+    </div>
 
-<a href="/resumen" class="back-btn"><i class="fas fa-arrow-left"></i> Tornar a l'inici</a>
+    <a href="/resumen" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Volver al resumen
+    </a>
+</div>
 
 </body>
 </html>

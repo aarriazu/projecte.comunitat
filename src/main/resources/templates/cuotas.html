@@ -2,48 +2,111 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Cuotas Simplificadas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gastos por Zona</title>
+
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f2f5, #d6e4f0);
+            color: #333;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2rem;
+            color: #0d6efd;
+            margin-bottom: 30px;
+        }
+
+        .title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #0d6efd;
+            margin: 14px auto 0;
+            border-radius: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #0d6efd;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f1f5ff;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 40px auto 0;
+            background-color: #0d6efd;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            width: fit-content;
+        }
+
+        .back-btn:hover {
+            background-color: #0b5ed7;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Cuotas</h1>
+<div class="container">
+    <h1 class="title">Lista de Gastos por Zona</h1>
 
-<!-- Por Propiedad -->
-<section>
-    <h2>Por Propiedad</h2>
-    <ul>
-        <li th:each="entry : ${quotesPerPropietat}">
-            <strong th:text="${entry.key.codi}">Código Propiedad</strong>
-            <ul>
-                <li th:each="zonaEntry : ${entry.value}">
-                    <span th:text="${zonaEntry.key.nom}">Zona</span> -
-                    <span th:text="${#numbers.formatDecimal(zonaEntry.value, 1, 'POINT', 2, 'NONE')} + ' €'">Importe</span>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</section>
+    <table>
+        <thead>
+        <tr>
+            <th>Descripción</th>
+            <th>Importe Total (€)</th>
+            <th>Código de Zona</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="d : ${despeses}">
+            <td th:text="${d.descripcio}">Limpieza mensual</td>
+            <td th:text="${#numbers.formatDecimal(d.importTotal, 1, 'COMMA', 2, 'POINT')} + ' €'">123,45 €</td>
+            <td th:text="${d.codiZona}">Z001</td>
+        </tr>
+        </tbody>
+    </table>
 
-<!-- Por Propietario -->
-<section>
-    <h2>Por Propietario</h2>
-    <ul>
-        <li th:each="entry : ${quotesPerPropietari}">
-            <strong th:text="${entry.key.nom}">Nombre Propietario</strong>
-            <ul>
-                <li th:each="zonaEntry : ${entry.value}">
-                    <span th:text="${zonaEntry.key.nom}">Zona</span> -
-                    <span th:text="${#numbers.formatDecimal(zonaEntry.value, 1, 'POINT', 2, 'NONE')} + ' €'">Importe</span>
-                </li>
-            </ul>
-            <p>
-                Total: <span th:text="${#numbers.formatDecimal(#lists.sum(entry.value.values), 1, 'POINT', 2, 'NONE')} + ' €'">0.00 €</span>
-            </p>
-        </li>
-    </ul>
-</section>
-
-<a href="/resumen" >Volver al inicio</a>
+    <a href="/resumen" class="back-btn"><i class="fas fa-arrow-left"></i> Volver al resumen</a>
+</div>
 
 </body>
 </html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Despeses per Zona</title>
+
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f2f5, #d6e4f0);
+            color: #333;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2rem;
+            color: #0d6efd;
+            margin-bottom: 30px;
+        }
+
+        .title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #0d6efd;
+            margin: 14px auto 0;
+            border-radius: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #0d6efd;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f1f5ff;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 40px auto 0;
+            background-color: #0d6efd;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            width: fit-content;
+        }
+
+        .back-btn:hover {
+            background-color: #0b5ed7;
+        }
+
+
+        .card-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: #0d6efd;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .prop-list {
+            margin-top: 10px;
+            padding-left: 16px;
+            list-style: disc;
+            font-size: 0.9rem;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 40px auto 0;
+            background-color: #0d6efd;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            width: fit-content;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #0b5ed7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="title">Llista de Despeses per Zona</h1>
+
+    <div th:each="entry : ${despesesPerZona}">
+        <h2 th:text="'Zona: ' + ${entry.key}">Zona: Z001</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Descripció</th>
+                <th>Import Total (€)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="d : ${entry.value}">
+                <td th:text="${d.descripcio}">Neteja mensual</td>
+                <td th:text="${#numbers.formatDecimal(d.importTotal, 1, 'COMMA', 2, 'POINT')} + ' €'">123,45 €</td>
+            </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td style="font-weight:bold;">Total zona</td>
+                    <td style="font-weight:bold;"
+                        th:text="${#numbers.formatDecimal(totalsPerZona[entry.key], 1, 'COMMA', 2, 'POINT')} + ' €'">
+                        0,00 €
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <br/>
+    </div>
+
+    <h1 class="title">Llista de Despeses per Propietari</h1>
+
+    <div class="card-list">
+        <div class="card" th:each="p : ${propietaris}">
+            <h2 th:text="${p.nom}">Nom del propietari</h2>
+            <p><strong>Codi:</strong> <span th:text="${p.codi}">123</span></p>
+            <ul class="prop-list">
+                <li th:each="prop : ${p.propietats}">
+                    <span th:text="${prop.codi}">Codi</span>
+                    <span th:if="${importesPropietat[prop.codi] != null and !importesPropietat[prop.codi].isEmpty()}">
+                        (
+                        <span th:each="entry, iterStat : ${importesPropietat[prop.codi].entrySet()}">
+                            <span th:text="|${entry.key}: ${#numbers.formatDecimal(entry.value, 1, 'COMMA', 2, 'POINT')} €|"></span>
+                            <span th:if="${!iterStat.last}">, </span>
+                        </span>
+                        )
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <a href="/resum" class="back-btn"><i class="fas fa-arrow-left"></i> Tornar al resum</a>
+</div>
+
+</body>
+</html>

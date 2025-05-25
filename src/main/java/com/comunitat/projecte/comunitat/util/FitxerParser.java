@@ -48,9 +48,15 @@ public class FitxerParser {
                     case "#Propietari":
                         String[] pr = line.split(";");
                         if (pr.length != 4) throw new IllegalArgumentException("Línea mal formada en #Propietari");
-                        Propietari propietari = new Propietari(pr[0], pr[1], pr[2], pr[3]);
+                        String idPropietari = pr[0].trim();
+                        Propietari propietari = new Propietari(idPropietari, pr[1], pr[2], pr[3]);
+                        for (Propietat prop : comunitat.getPropietats()) {
+                            if (prop.getPropietari().trim().equals(idPropietari)) {
+                                propietari.getPropietats().add(prop);
+                            }
+                        }
                         comunitat.getPropietaris().add(propietari);
-                        mapaPropietaris.put(pr[0], propietari);
+                        mapaPropietaris.put(idPropietari, propietari);
                         break;
 
                     case "#Propietat":
@@ -60,7 +66,7 @@ public class FitxerParser {
                         String codi = parts[1];
                         int m2 = Integer.parseInt(parts[2]);
                         String codiPropietari = parts[3];
-                        String zonesStr = parts[4];
+                        String zonesPercentatge = parts[4];
                         String caracteristica1 = parts[5];
                         String caracteristica2 = parts[6];
 
@@ -70,12 +76,13 @@ public class FitxerParser {
                                 codi,
                                 m2,
                                 codiPropietari,
+                                zonesPercentatge,
                                 caracteristica1,
                                 caracteristica2
                         );
 
                         // Procesar las zonas y porcentajes
-                        String[] zps = zonesStr.split(",");
+                        String[] zps = zonesPercentatge.split(",");
                         for (String zp : zps) {
                             if (zp.contains("-")) {
                                 String[] zpParts = zp.split("-");
@@ -84,7 +91,7 @@ public class FitxerParser {
                                 Zona zonaAssignada = mapaZones.get(codiZona);
                                 if (zonaAssignada == null) throw new IllegalArgumentException("Zona no encontrada: " + codiZona);
                                 PercentatgeZona pz = new PercentatgeZona(zonaAssignada, percent);
-                                propietat.getPercentatgesZones().add(pz);
+                                //propietat.getPercentatgesZones().add(pz);
                                 zonaAssignada.getPercentatges().add(pz);
                             }
                         }

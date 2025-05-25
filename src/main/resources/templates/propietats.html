@@ -2,11 +2,12 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gastos por Zona</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Propietats | Resum</title>
 
-    <!-- Font Awesome para íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Font Awesome (solo para el icono del botón) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <style>
         body {
@@ -26,6 +27,7 @@
             font-size: 2rem;
             color: #0d6efd;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .title::after {
@@ -85,27 +87,37 @@
 </head>
 <body>
 
-<div class="container">
-    <h1 class="title">Lista de Gastos por Zona</h1>
+<div class="form-wrapper">
+    <div class="form-card">
+        <h1 class="title">Propietats</h1>
 
-    <table>
+        <table>
         <thead>
         <tr>
-            <th>Descripción</th>
-            <th>Importe Total (€)</th>
-            <th>Código de Zona</th>
+            <th>Codi</th>
+            <th>Metres Cuadrats</th>
+            <th>Propietari</th>
+            <th>Zones</th>
+            <th>Caracteristica 1</th>
+            <th>Caracteristica 2</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="d : ${despeses}">
-            <td th:text="${d.descripcio}">Limpieza mensual</td>
-            <td th:text="${#numbers.formatDecimal(d.importTotal, 1, 'COMMA', 2, 'POINT')} + ' €'">123,45 €</td>
-            <td th:text="${d.codiZona}">Z001</td>
+        <tr th:each="prop : ${propietats}">
+            <td th:text="${prop.codi}">Codi de la propietat</td>
+            <td th:text="${prop.metresQuadrats}">Metres cuadrats</td>
+            <td th:text="${propietariNoms[prop.propietari]}">Propietari</td>
+            <td th:text="${prop.zonesPercentatge}">Percentatje de zona</td>
+            <td th:text="${prop.caracteristica1}">Caracteristica 1</td>
+            <td th:text="${prop.caracteristica2}">Caracteristica 2</td>
         </tr>
         </tbody>
     </table>
 
-    <a href="/resumen" class="back-btn"><i class="fas fa-arrow-left"></i> Volver al resumen</a>
+        <a href="/resum" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Tornar al resum
+        </a>
+    </div>
 </div>
 
 </body>

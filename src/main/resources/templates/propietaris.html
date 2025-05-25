@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Propietarios | Resumen</title>
+    <title>Propietaris | Resum</title>
 
     <!-- Font Awesome (para iconos si necesitas) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -103,17 +103,16 @@
         <div class="card" th:each="p : ${propietaris}">
             <h2 th:text="${p.nom}">Nom del propietari</h2>
             <p><strong>Codi:</strong> <span th:text="${p.codi}">123</span></p>
-            <p><strong>Població:</strong> <span th:text="${p.poblacio}">Barcelona</span></p>
             <p><strong>Email:</strong> <span th:text="${p.email}">email@exemple.com</span></p>
-
+            <p><strong>Propietats:</strong></p>
             <ul class="prop-list">
-                <li th:each="prop : ${p.propietats}" th:text="'Propietat: ' + ${prop.codi}">Propietat X</li>
+                <li th:each="prop : ${p.propietats}" th:text="${prop.codi}">Codi de la propietat</li>
             </ul>
         </div>
     </div>
 
-    <a href="/resumen" class="back-btn">
-        <i class="fas fa-arrow-left"></i> Volver al resumen
+    <a href="/resum" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Tornar al resum
     </a>
 </div>
 
